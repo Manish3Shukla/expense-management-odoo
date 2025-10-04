@@ -1,0 +1,51 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: expenses
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8000:8000"
+
+  celery:
+    build: ./backend
+    command: ["celery", "-A", "app.celery_worker.celery_app", "worker", "--loglevel=INFO"]
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+
+  frontend:
+    working_dir: /app
+    image: node:20-alpine
+    command: sh -c "npm install && npm run dev -- --host"
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
