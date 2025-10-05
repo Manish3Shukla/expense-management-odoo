@@ -1,0 +1,218 @@
+📋 Requirements & Commands to Run ExpenseFlow
+System Requirements
+Option 1: Docker (Easiest - Recommended)
+Docker Desktop (includes Docker & Docker Compose)
+Download: https://www.docker.com/products/docker-desktop
+Windows 10/11 (64-bit) or macOS 10.15+
+4GB RAM minimum, 8GB recommended
+Option 2: Manual Setup
+Python 3.11 or higher
+Download: https://www.python.org/downloads/
+Check: python --version
+Node.js 20 or higher
+Download: https://nodejs.org/
+Check: node --version and npm --version
+PostgreSQL 15 or higher
+Download: https://www.postgresql.org/download/
+Check: psql --version
+Redis
+Windows: https://github.com/microsoftarchive/redis/releases
+Check: redis-cli --version
+🚀 Commands to Run (Docker - Recommended)
+1. Install Docker Desktop
+Download and install from: https://www.docker.com/products/docker-desktop
+
+2. Verify Docker Installation
+bash
+docker --version
+docker compose version
+3. Navigate to Project
+bash
+cd m:\xc\expense-management-system
+4. Setup Environment Files
+bash
+# Windows Command Prompt
+copy backend\.env.example backend\.env
+copy frontend\.env.example frontend\.env
+
+# Windows PowerShell
+Copy-Item backend\.env.example backend\.env
+Copy-Item frontend\.env.example frontend\.env
+5. Start Application
+bash
+docker compose up --build
+6. Access Application
+Frontend: http://localhost:5173
+Backend:  http://localhost:8000
+API Docs: http://localhost:8000/docs
+7. (Optional) Load Demo Data
+bash
+# In a new terminal
+docker compose exec backend python seed.py
+8. Stop Application
+bash
+# Press Ctrl+C, then:
+docker compose down
+💻 Commands to Run (Manual Setup)
+Prerequisites Installation
+1. Install Python 3.11+
+bash
+# Download from python.org, then verify:
+python --version
+# Should show: Python 3.11.x or higher
+2. Install Node.js 20+
+bash
+# Download from nodejs.org, then verify:
+node --version
+npm --version
+3. Install PostgreSQL
+bash
+# Download from postgresql.org, then create database:
+psql -U postgres
+CREATE DATABASE expenses;
+\q
+4. Install Redis
+bash
+# Windows: Download from GitHub releases
+# Then verify:
+redis-server --version
+Backend Setup Commands
+bash
+# 1. Navigate to backend
+cd m:\xc\expense-management-system\backend
+
+# 2. Create virtual environment
+python -m venv .venv
+
+# 3. Activate virtual environment
+.venv\Scripts\activate
+
+# 4. Install Python dependencies
+pip install -r requirements.txt
+
+# 5. Setup environment
+copy .env.example .env
+
+# 6. Edit .env file with your database credentials
+# DATABASE_URL=postgresql+psycopg2://postgres:YOUR_PASSWORD@localhost:5432/expenses
+
+# 7. Start backend server
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+Frontend Setup Commands
+bash
+# 1. Open NEW terminal, navigate to frontend
+cd m:\xc\expense-management-system\frontend
+
+# 2. Install Node.js dependencies
+npm install
+
+# 3. Setup environment
+copy .env.example .env
+
+# 4. Start frontend server
+npm run dev
+Redis Setup Commands
+bash
+# Open NEW terminal
+# Start Redis server
+redis-server
+Celery Worker Commands (Optional)
+bash
+# Open NEW terminal
+cd m:\xc\expense-management-system\backend
+.venv\Scripts\activate
+celery -A app.celery_worker.celery_app worker --loglevel=INFO
+📦 Complete Dependency List
+Backend Python Packages (from requirements.txt)
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+SQLAlchemy==2.0.30
+psycopg2-binary==2.9.9
+alembic==1.13.2
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+pydantic==2.7.4
+pydantic-settings==2.3.4
+python-multipart==0.0.9
+celery==5.4.0
+redis==5.0.7
+pytesseract==0.3.10
+Pillow==10.3.0
+httpx==0.27.0
+Frontend Node.js Packages (from package.json)
+json
+{
+  "dependencies": {
+    "@headlessui/react": "^2.1.8",
+    "@tanstack/react-query": "^5.51.1",
+    "axios": "^1.7.2",
+    "clsx": "^2.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.53.0",
+    "react-router-dom": "^6.26.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0"
+  }
+}
+⚡ Quick Reference Card
+Docker (3 Commands)
+bash
+cd m:\xc\expense-management-system
+copy backend\.env.example backend\.env && copy frontend\.env.example frontend\.env
+docker compose up --build
+Manual (4 Terminals Needed)
+bash
+# Terminal 1: Backend
+cd backend && python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt && uvicorn app.main:app --reload
+
+# Terminal 2: Frontend
+cd frontend && npm install && npm run dev
+
+# Terminal 3: Redis
+redis-server
+
+# Terminal 4: Celery (optional)
+cd backend && .venv\Scripts\activate && celery -A app.celery_worker.celery_app worker --loglevel=INFO
+🎯 Recommended Approach
+Use Docker! It's the easiest and most reliable way:
+
+Install Docker Desktop
+Run 3 commands (see Quick Reference above)
+Open http://localhost:5173
+Done! ✅
+Why Docker?
+
+✅ No need to install Python, Node.js, PostgreSQL, Redis separately
+✅ Everything works out of the box
+✅ Same environment on all machines
+✅ Easy to start/stop
+✅ No configuration headaches
+📝 First Time Usage
+After starting the application:
+
+Register: http://localhost:5173 → Click "Register"
+Fill details: Name, Company, Country, Email, Password
+Login and explore!
+Or load demo data:
+
+bash
+docker compose exec backend python seed.py
+# Login: admin@demo.com / admin123
+Need detailed help? Check:
+
+QUICKSTART.md
+ - 5-minute guide
+SETUP_GUIDE.md
+ - Complete setup with troubleshooting
+README.md
+ - Full documentation
