@@ -1,5 +1,6 @@
 📋 Requirements & Commands to Run ExpenseFlow
 System Requirements
+
 Option 1: Docker (Easiest - Recommended)
 Docker Desktop (includes Docker & Docker Compose)
 Download: https://www.docker.com/products/docker-desktop
@@ -18,6 +19,8 @@ Check: psql --version
 Redis
 Windows: https://github.com/microsoftarchive/redis/releases
 Check: redis-cli --version
+
+
 🚀 Commands to Run (Docker - Recommended)
 1. Install Docker Desktop
 Download and install from: https://www.docker.com/products/docker-desktop
@@ -53,6 +56,9 @@ docker compose exec backend python seed.py
 bash
 # Press Ctrl+C, then:
 docker compose down
+
+
+
 💻 Commands to Run (Manual Setup)
 Prerequisites Installation
 1. Install Python 3.11+
@@ -122,6 +128,8 @@ bash
 cd m:\xc\expense-management-system\backend
 .venv\Scripts\activate
 celery -A app.celery_worker.celery_app worker --loglevel=INFO
+
+
 📦 Complete Dependency List
 Backend Python Packages (from requirements.txt)
 fastapi==0.111.0
@@ -164,6 +172,8 @@ json
     "vite": "^5.4.0"
   }
 }
+
+
 ⚡ Quick Reference Card
 Docker (3 Commands)
 bash
@@ -183,6 +193,8 @@ redis-server
 
 # Terminal 4: Celery (optional)
 cd backend && .venv\Scripts\activate && celery -A app.celery_worker.celery_app worker --loglevel=INFO
+
+
 🎯 Recommended Approach
 Use Docker! It's the easiest and most reliable way:
 
@@ -197,6 +209,8 @@ Why Docker?
 ✅ Same environment on all machines
 ✅ Easy to start/stop
 ✅ No configuration headaches
+
+
 📝 First Time Usage
 After starting the application:
 
